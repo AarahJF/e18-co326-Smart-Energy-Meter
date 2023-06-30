@@ -1,7 +1,10 @@
 ___
-# DELETE THIS INSTRUCTIONS AND ADD A SHORT INTRODUCTION ABOUT YOUR PROJECT
+# CO326 - Project
+# Smart Energy Meter
 ___
+https://github.com/cepdnaclk/e18-co326-Smart-Energy-Meter
 
-## Please refer the instructions in below URL:
-
-https://projects.ce.pdn.ac.lk/docs/how-to-add-a-project
+## Problem
+Inefficient Energy Monitoring 
+## Solution
+Transform your energy consumption with a smart IoT energy meter for precise monitoring and cost-saving insights.
