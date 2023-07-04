@@ -52,9 +52,9 @@
         "z": "9fe836727e0859f4",
         "name": "",
         "group": "c5350d69f1b9f523",
-        "order": 1,
-        "width": "6",
-        "height": "6",
+        "order": 2,
+        "width": 6,
+        "height": 3,
         "gtype": "gage",
         "title": "Voltage",
         "label": "V",
@@ -70,8 +70,8 @@
         "seg2": "20",
         "diff": false,
         "className": "",
-        "x": 500,
-        "y": 140,
+        "x": 480,
+        "y": 160,
         "wires": []
     },
     {
@@ -119,9 +119,9 @@
         "z": "9fe836727e0859f4",
         "name": "",
         "group": "367a0eed4b27f626",
-        "order": 1,
-        "width": "6",
-        "height": "6",
+        "order": 2,
+        "width": 6,
+        "height": 3,
         "gtype": "gage",
         "title": "Current",
         "label": "A",
@@ -138,7 +138,7 @@
         "diff": false,
         "className": "",
         "x": 900,
-        "y": 140,
+        "y": 160,
         "wires": []
     },
     {
@@ -155,7 +155,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 250,
-        "y": 320,
+        "y": 280,
         "wires": [
             [
                 "b9358223cb4ab1a2",
@@ -177,7 +177,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 490,
-        "y": 320,
+        "y": 280,
         "wires": []
     },
     {
@@ -187,14 +187,14 @@
         "name": "",
         "group": "8d1ecf7bd94f548c",
         "order": 2,
-        "width": "6",
-        "height": "6",
+        "width": 6,
+        "height": 3,
         "gtype": "gage",
         "title": "Power",
         "label": "W",
         "format": "{{value}}",
         "min": 0,
-        "max": "300",
+        "max": "150",
         "colors": [
             "#528052",
             "#6c6c42",
@@ -205,7 +205,7 @@
         "diff": false,
         "className": "",
         "x": 470,
-        "y": 260,
+        "y": 240,
         "wires": []
     },
     {
@@ -222,7 +222,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 690,
-        "y": 320,
+        "y": 280,
         "wires": [
             [
                 "ba2b79dacccbedae",
@@ -244,7 +244,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 910,
-        "y": 320,
+        "y": 280,
         "wires": []
     },
     {
@@ -254,8 +254,8 @@
         "name": "",
         "group": "8dfe68549fede7df",
         "order": 2,
-        "width": "6",
-        "height": "6",
+        "width": 6,
+        "height": 3,
         "gtype": "gage",
         "title": "kWh",
         "label": "C",
@@ -272,8 +272,654 @@
         "diff": false,
         "className": "",
         "x": 890,
-        "y": 260,
+        "y": 240,
         "wires": []
+    },
+    {
+        "id": "6a0e907321bc88a3",
+        "type": "mqtt in",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "topic": "Sensor1_data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "5750ebec38658556",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 380,
+        "wires": [
+            [
+                "86369fdae846ec35"
+            ]
+        ]
+    },
+    {
+        "id": "2b5dcaf8d9ef84bc",
+        "type": "ui_table",
+        "z": "9fe836727e0859f4",
+        "group": "c5350d69f1b9f523",
+        "name": "",
+        "order": 3,
+        "width": 6,
+        "height": 4,
+        "columns": [
+            {
+                "field": "updatedAt",
+                "title": "Time",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "value",
+                "title": "Value",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 670,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "86369fdae846ec35",
+        "type": "function",
+        "z": "9fe836727e0859f4",
+        "name": "function 3",
+        "func": "// Assuming msg.payload contains the JSON object array\nvar payload = msg.payload;\n\n// Loop through the objects in the JSON array and remove the \"topic\" property\nfor (var i = 0; i < payload.length; i++) {\n    delete payload[i].topic;\n}\n\n// Update msg.payload with the modified JSON array\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 380,
+        "wires": [
+            [
+                "2b5dcaf8d9ef84bc",
+                "b6204c50867064db"
+            ]
+        ]
+    },
+    {
+        "id": "b93aee0ecabcc7a4",
+        "type": "mqtt in",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "topic": "Sensor2_data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "5750ebec38658556",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "349106caa8b48a10"
+            ]
+        ]
+    },
+    {
+        "id": "74c70c04f0884d54",
+        "type": "ui_table",
+        "z": "9fe836727e0859f4",
+        "group": "367a0eed4b27f626",
+        "name": "",
+        "order": 3,
+        "width": 6,
+        "height": 4,
+        "columns": [
+            {
+                "field": "updatedAt",
+                "title": "Time",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "value",
+                "title": "Value",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 670,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "349106caa8b48a10",
+        "type": "function",
+        "z": "9fe836727e0859f4",
+        "name": "function 4",
+        "func": "// Assuming msg.payload contains the JSON object array\nvar payload = msg.payload;\n\n// Loop through the objects in the JSON array and remove the \"topic\" property\nfor (var i = 0; i < payload.length; i++) {\n    delete payload[i].topic;\n}\n\n// Update msg.payload with the modified JSON array\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 440,
+        "wires": [
+            [
+                "74c70c04f0884d54"
+            ]
+        ]
+    },
+    {
+        "id": "9af75e6f1a6aefed",
+        "type": "mqtt in",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "topic": "Sensor3_data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "5750ebec38658556",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 500,
+        "wires": [
+            [
+                "41e2e1c088ca7ef5"
+            ]
+        ]
+    },
+    {
+        "id": "98ac04cb457ee61a",
+        "type": "ui_table",
+        "z": "9fe836727e0859f4",
+        "group": "8d1ecf7bd94f548c",
+        "name": "",
+        "order": 3,
+        "width": 6,
+        "height": 4,
+        "columns": [
+            {
+                "field": "updatedAt",
+                "title": "Time",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "value",
+                "title": "Value",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 670,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "41e2e1c088ca7ef5",
+        "type": "function",
+        "z": "9fe836727e0859f4",
+        "name": "function 5",
+        "func": "// Assuming msg.payload contains the JSON object array\nvar payload = msg.payload;\n\n// Loop through the objects in the JSON array and remove the \"topic\" property\nfor (var i = 0; i < payload.length; i++) {\n    delete payload[i].topic;\n}\n\n// Update msg.payload with the modified JSON array\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 500,
+        "wires": [
+            [
+                "98ac04cb457ee61a"
+            ]
+        ]
+    },
+    {
+        "id": "776b4262aa12da76",
+        "type": "mqtt in",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "topic": "Sensor4_data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "5750ebec38658556",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 560,
+        "wires": [
+            [
+                "16f7209abc1d2c0f"
+            ]
+        ]
+    },
+    {
+        "id": "ef5850ba56a743af",
+        "type": "ui_table",
+        "z": "9fe836727e0859f4",
+        "group": "8dfe68549fede7df",
+        "name": "",
+        "order": 3,
+        "width": 6,
+        "height": 4,
+        "columns": [
+            {
+                "field": "updatedAt",
+                "title": "Time",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "value",
+                "title": "Value",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 670,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "16f7209abc1d2c0f",
+        "type": "function",
+        "z": "9fe836727e0859f4",
+        "name": "function 6",
+        "func": "// Assuming msg.payload contains the JSON object array\nvar payload = msg.payload;\n\n// Loop through the objects in the JSON array and remove the \"topic\" property\nfor (var i = 0; i < payload.length; i++) {\n    delete payload[i].topic;\n}\n\n// Update msg.payload with the modified JSON array\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 560,
+        "wires": [
+            [
+                "ef5850ba56a743af"
+            ]
+        ]
+    },
+    {
+        "id": "b6204c50867064db",
+        "type": "debug",
+        "z": "9fe836727e0859f4",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "74b45a6d87813ba1",
+        "type": "mqtt out",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "topic": "topic",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5750ebec38658556",
+        "x": 530,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "456109bb0452630f",
+        "type": "debug",
+        "z": "9fe836727e0859f4",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "4a696f5321a0cb9e",
+        "type": "ui_text_input",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "label": "Voltage Callibration Factor",
+        "tooltip": "",
+        "group": "99f64524449bd1d0",
+        "order": 2,
+        "width": 13,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 300,
+        "y": 720,
+        "wires": [
+            [
+                "e532f8e4882032f8",
+                "1632627d10beabec"
+            ]
+        ]
+    },
+    {
+        "id": "e532f8e4882032f8",
+        "type": "mqtt out",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "topic": "device/voltage_calibration",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5750ebec38658556",
+        "x": 590,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "1632627d10beabec",
+        "type": "debug",
+        "z": "9fe836727e0859f4",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "c05c931babdca9b2",
+        "type": "ui_text_input",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "label": "Curent Callibration Factor",
+        "tooltip": "",
+        "group": "99f64524449bd1d0",
+        "order": 5,
+        "width": 13,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 290,
+        "y": 800,
+        "wires": [
+            [
+                "7acc9b8eb1efcd36",
+                "5903a7f70b4b247d"
+            ]
+        ]
+    },
+    {
+        "id": "7acc9b8eb1efcd36",
+        "type": "mqtt out",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "topic": "device/current_calibration",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5750ebec38658556",
+        "x": 590,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "5903a7f70b4b247d",
+        "type": "debug",
+        "z": "9fe836727e0859f4",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "61ac08e509051b85",
+        "type": "mqtt in",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "topic": "device/current_calibration",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "5750ebec38658556",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 880,
+        "wires": [
+            [
+                "39d51445cc1f5be9"
+            ]
+        ]
+    },
+    {
+        "id": "39d51445cc1f5be9",
+        "type": "debug",
+        "z": "9fe836727e0859f4",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "b7f773d961c1b72a",
+        "type": "ui_text_input",
+        "z": "9fe836727e0859f4",
+        "name": "",
+        "label": "Display",
+        "tooltip": "",
+        "group": "99f64524449bd1d0",
+        "order": 8,
+        "width": 13,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 240,
+        "y": 620,
+        "wires": [
+            [
+                "74b45a6d87813ba1",
+                "456109bb0452630f"
+            ]
+        ]
+    },
+    {
+        "id": "53c52d20deeb0453",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "c5350d69f1b9f523",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "1cfc999f224f43f9",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "367a0eed4b27f626",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "6abeb902b13fca6c",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "8d1ecf7bd94f548c",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "76620cc1ceb5eea6",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "8dfe68549fede7df",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "12c5da47ac0aa355",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "99f64524449bd1d0",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "80ea703937cc0b4f",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "99f64524449bd1d0",
+        "order": 3,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "d65a9767add5b691",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "99f64524449bd1d0",
+        "order": 4,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "449d6d847e0bdb31",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "99f64524449bd1d0",
+        "order": 6,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "e107c296ae0dde1f",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "99f64524449bd1d0",
+        "order": 7,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "df72bb88b89d90bd",
+        "type": "ui_spacer",
+        "z": "9fe836727e0859f4",
+        "name": "spacer",
+        "group": "99f64524449bd1d0",
+        "order": 9,
+        "width": 5,
+        "height": 1
     },
     {
         "id": "5750ebec38658556",
@@ -318,7 +964,7 @@
         "type": "ui_group",
         "name": "Group 2",
         "tab": "cc6e973aba3930a5",
-        "order": 2,
+        "order": 3,
         "disp": false,
         "width": "6",
         "collapse": false,
@@ -329,7 +975,7 @@
         "type": "ui_group",
         "name": "Group 3",
         "tab": "cc6e973aba3930a5",
-        "order": 3,
+        "order": 4,
         "disp": false,
         "width": "6",
         "collapse": false,
@@ -340,9 +986,20 @@
         "type": "ui_group",
         "name": "Group 4",
         "tab": "cc6e973aba3930a5",
-        "order": 4,
+        "order": 5,
         "disp": false,
         "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "99f64524449bd1d0",
+        "type": "ui_group",
+        "name": "Callibration of Sensors",
+        "tab": "cc6e973aba3930a5",
+        "order": 6,
+        "disp": true,
+        "width": "24",
         "collapse": false,
         "className": ""
     },
