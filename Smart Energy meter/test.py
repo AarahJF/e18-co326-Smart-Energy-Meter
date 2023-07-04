@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import mysql.connector
 import json
+import Controller
 
 # MQTT broker details
 mqtt_broker = "91.121.93.94"
@@ -52,6 +53,7 @@ def on_connect(client, userdata, flags, rc):
 
 # Callback function when a message is received on a subscribed topic
 def on_message(client, userdata, msg):
+    Controller.publish_latest()
     print(f"Received message: {msg.payload.decode()}")     
     # print(msg.topic)
     
