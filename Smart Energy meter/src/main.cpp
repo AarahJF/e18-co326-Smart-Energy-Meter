@@ -21,9 +21,8 @@ PubSubClient client(espClient);
 
 // EnergyMonitor and calibration constants
 EnergyMonitor emon;
-#define vCalibration 166.6 // Adjusted calibration factor for 230V
-#define currCalibration 0.50
-
+float vCalibration = 166.6;   // Default calibration factor for 230V
+float currCalibration = 0.50; // Default calibration factor for current
 // Other variables
 unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE (50)
@@ -60,7 +59,45 @@ void setup_wifi()
 
 void callback(char *topic, byte *payload, unsigned int length)
 {
-  // Handle incoming MQTT messages if needed
+  // Convert the payload to a string
+  char receivedMessage[length + 1];
+  for (unsigned int i = 0; i < length; i++)
+  {
+    receivedMessage[i] = (char)payload[i];
+  }
+  receivedMessage[length] = '\0';
+
+  // Display the received message on the Serial Monitor
+  Serial.print("Received message on topic: ");
+  Serial.println(topic);
+  Serial.print("Message: ");
+  Serial.println(receivedMessage);
+  // Here you can perform any actions based on the received message
+  // For example, if you receive the text, you can display it on the LCD
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Received message:");
+  lcd.setCursor(0, 1);
+  lcd.print(receivedMessage);
+
+  // Check if the received message is a number
+  float calibrationValue = atof(receivedMessage);
+  if (calibrationValue != 0.0)
+  {
+    // Update calibration factors based on topic
+    if (strcmp(topic, "device/voltage_calibration") == 0)
+    {
+      vCalibration = calibrationValue;
+      Serial.print("Voltage Calibration updated to: ");
+      Serial.println(vCalibration);
+    }
+    else if (strcmp(topic, "device/current_calibration") == 0)
+    {
+      currCalibration = calibrationValue;
+      Serial.print("Current Calibration updated to: ");
+      Serial.println(currCalibration);
+    }
+  }
 }
 
 void reconnect()
@@ -74,8 +111,9 @@ void reconnect()
     if (client.connect(clientId.c_str()))
     {
       Serial.println("connected");
-      client.publish("device/temp", "hello world");
-      client.subscribe("device/led");
+      client.subscribe("topic");
+      client.subscribe("device/voltage_calibration");
+      client.subscribe("device/current_calibration");
     }
     else
     {

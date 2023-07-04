@@ -29,7 +29,7 @@ def retrieve_latest():
     cursor = conn.cursor()
 
     # SQL query to retrieve data
-    query = "SELECT * FROM data ORDER BY updatedAt DESC LIMIT 15"  # Replace 'data' with your table name
+    query = "SELECT * FROM data ORDER BY updatedAt DESC LIMIT 40"  # Replace 'data' with your table name
 
     # Execute the query
     cursor.execute(query)
@@ -118,20 +118,7 @@ def publish_latest():
     # Disconnect from the MQTT broker
     client.disconnect()
 
-    # Save JSON data to local files
-    with open("sensor1_data.json", "w") as file:
-        file.write(sensor1_data)
-
-    with open("sensor2_data.json", "w") as file:
-        file.write(sensor2_data)
-    # Save more data for other sensors if needed
-    # Save JSON data to local files
-    with open("sensor3_data.json", "w") as file:
-        file.write(sensor3_data)
-
-    with open("sensor4_data.json", "w") as file:
-        file.write(sensor4_data)
-    # Save more data for other sensors if needed
+   
 
 
 # Start executing the function
